@@ -77,7 +77,7 @@ class Register:
         return self.address >= 0x9000
 
     def rawvalue(self, response):
-        if not hasattr(response, "getRegister"):
+        if not hasattr(response, "registers"):
             _logger.info ("No value for register " + repr(self.name))
             print (self)
             print (Coil.decode(self, response))
@@ -85,7 +85,7 @@ class Register:
             return None
         mask = rawvalue = lastvalue = 0
         for i in range(self.size):
-            lastvalue = response.getRegister(i)
+            lastvalue = response.registers[i]
             rawvalue = rawvalue | (lastvalue << (i * 16))
             mask = (mask << 16) | 0xffff
         if (lastvalue & 0x8000) == 0x8000:
