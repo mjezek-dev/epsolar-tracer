@@ -3,7 +3,7 @@
 # import the server implementation
 from pymodbus.client import ModbusSerialClient as ModbusClient
 #from pymodbus.mei_message import *
-from pymodbus.mei_message import ReadDeviceInformationRequest
+from pymodbus.pdu.mei_message import ReadDeviceInformationRequest
 from pymodbus.exceptions import ParameterException, ModbusException
 from pymodbus.pdu import ExceptionResponse
 from pyepsolartracer.registers import registerByName
@@ -26,7 +26,7 @@ class EPsolarTracerClient:
         if serialclient == None:
             port = kwargs.get('port', '/dev/ttyXRUSB0')
             baudrate = kwargs.get('baudrate', 115200)
-            self.client = ModbusClient(method = 'rtu', port = port, baudrate = baudrate, kwargs = kwargs)
+            self.client = ModbusClient(framer = 'rtu', port = port, baudrate = baudrate, kwargs = kwargs)
         else:
             self.client = serialclient
 
